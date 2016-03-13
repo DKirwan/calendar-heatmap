@@ -5,10 +5,11 @@ A [d3.js](d3js.org) heatmap representing time series data. Inspired by Github's 
 
 ## TODO's
 
-* Allow developers to enable/disable tooltip
-* Allow editing of tooltip text
-* Allow editing of the cell gradient colours
-* Allow editing of the start/end dates
+* Enable/disable tooltip
+* Editing of tooltip text
+* Editing of the cell gradient colours
+* Configuration of the start/end dates
+* Add optional callback for click events on the day cells
 
 ## Configuration
 
