@@ -73,7 +73,7 @@ function calendarHeatmap() {
             .attr('class', 'cell-tooltip')
             .html(tooltipHTMLForDate(d))
             .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH; })
-            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3;});
+            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3; });
         })
         .on('mouseout', function (d, i) {
           tooltip.remove();

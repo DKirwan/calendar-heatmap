@@ -87,7 +87,6 @@
   // your variables within it.
   "predef": [
     "d3",
-    "_", // underscore.js
     "moment", // moment.js
     "$", // jQuery
     "calendarHeatmap"
