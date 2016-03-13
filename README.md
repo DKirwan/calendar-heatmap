@@ -1,16 +1,14 @@
 # D3 Calendar Heatmap
 A [d3.js](d3js.org) heatmap representing time series data. Inspired by Github's contribution chart
 
+![Reusable D3.js Calendar Heatmao chart](https://raw.githubusercontent.com/DKirwan/calendar-heatmap/develop/example/thumbnail.png)
+
 ## TODO's
 
 * Allow developers to enable/disable tooltip
 * Allow editing of tooltip text
 * Allow editing of the cell gradient colours
 * Allow editing of the start/end dates
-
-# D3 Sparkline Chart
-
-![Reusable D3.js Calendar Heatmao chart](https://raw.githubusercontent.com/DKirwan/calendar-heatmap/develop/example/thumbnail.png)
 
 ## Configuration
 
