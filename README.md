@@ -1,7 +1,7 @@
 # D3 Calendar Heatmap
 A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by Github's contribution chart
 
-![Reusable D3.js Calendar Heatmao chart](https://raw.githubusercontent.com/DKirwan/calendar-heatmap/develop/example/thumbnail.png)
+![Reusable D3.js Calendar Heatmap chart](https://raw.githubusercontent.com/DKirwan/calendar-heatmap/develop/example/thumbnail.png)
 
 ## TODO's
 
@@ -17,6 +17,11 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 |:------------- |:-------------|:-----:|:-----:|
 | data | Path to data to render on the chart | none | yes |
 | selector | DOM selector to attach the chart to | body | no |
+
+## Dependencies
+
+* [d3.js](https://d3js.org/)
+* [moment.js](http://momentjs.com/)
 
 ## Usage
 
