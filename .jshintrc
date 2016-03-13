@@ -86,32 +86,10 @@
   // To ignore any custom global variables, enable the `predef` option and list
   // your variables within it.
   "predef": [
-    "define",
-    "describe",
-    "before",
-    "beforeEach",
-    "it",
-    "xit",
-    "after",
-    "afterEach",
-    "spyOn",
-    "jstz",
-
-    // third-party libraries used in the Admin UI
-    "angular",
-    "$log", // angular logging
-    "jasmine", // jasmine unit testing
-    "inject", // jasmine unit testing
-    "expect", // jasmine unit testing
-    "spyOn", // jasmine unit testing
-    "Highcharts",
-    "debug",
     "d3",
-    "Rollbar",
     "_", // underscore.js
     "moment", // moment.js
-    "$", // jQuery,
-    "ac",
-    "io"  // socket IO
+    "$", // jQuery
+    "calendarHeatmap"
   ]
 }
