@@ -7,9 +7,11 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 
 * Enable/disable tooltip
 * Editing of tooltip text
-* Editing of the cell gradient colours
+* ~~Editing of the cell gradient colours~~
 * Configuration of the start/end dates
 * Add optional callback for click events on the day cells
+* Add project to bower
+* Remove example and vendor folders to separate `gh-pages` branch
 
 ## Configuration
 

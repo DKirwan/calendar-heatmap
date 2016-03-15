@@ -18,9 +18,19 @@
           count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 10)
         };
       });
+
+      /*
+      // Using default colors
       var heatmap = calendarHeatmap()
                       .data(chartData)
                       .selector('.container');  // any valid CSS selector
+      */
+
+      // Using custom colors
+      var heatmap = calendarHeatmap()
+                      .data(chartData)
+                      .selector('.container')
+                      .colorRange(['#FF3333', '#33FF77']);
       heatmap();  // render the chart
     </script>
   </body>
