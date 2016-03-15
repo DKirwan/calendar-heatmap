@@ -13,6 +13,7 @@ function calendarHeatmap() {
   var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
   var data = [];
 	var colorRange = ['#D8E6E7', '#218380'];
+  var tooltipEnabled = true;
 
   // setters and getters
   chart.data = function (value) {
@@ -30,6 +31,12 @@ function calendarHeatmap() {
 	chart.colorRange = function (value) {
     if (!arguments.length) { return colorRange; }
     colorRange = value;
+    return chart;
+  };
+
+  chart.tooltipEnabled = function (value) {
+    if (!arguments.length) { return tooltipEnabled; }
+    tooltipEnabled = value;
     return chart;
   };
 
@@ -73,18 +80,21 @@ function calendarHeatmap() {
           var result = cellDate.week() - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
           return result * (SQUARE_LENGTH + SQUARE_PADDING);
         })
-        .attr('y', function (d, i) { return MONTH_LABEL_PADDING + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); })
-        .on('mouseover', function (d, i) {
-          tooltip = d3.select('body')
-            .append('div')
-            .attr('class', 'cell-tooltip')
-            .html(tooltipHTMLForDate(d))
-            .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH; })
-            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3; });
+        .attr('y', function (d, i) { return MONTH_LABEL_PADDING + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); });
+
+      if(tooltipEnabled) {
+        dayRects.on('mouseover', function (d, i) {
+            tooltip = d3.select('body')
+              .append('div')
+              .attr('class', 'cell-tooltip')
+              .html(tooltipHTMLForDate(d))
+              .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH; })
+              .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3; });
         })
         .on('mouseout', function (d, i) {
-          tooltip.remove();
+            tooltip.remove();
         });
+      }
 
       dayRects.exit().remove();
       var monthLabels = svg.selectAll('.month')
