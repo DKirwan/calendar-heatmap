@@ -12,6 +12,7 @@ function calendarHeatmap() {
   var now = moment().endOf('day').toDate();
   var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
   var data = [];
+	var colorRange = ['#D8E6E7', '#218380'];
 
   // setters and getters
   chart.data = function (value) {
@@ -26,6 +27,12 @@ function calendarHeatmap() {
     return chart;
   };
 
+	chart.colorRange = function (value) {
+    if (!arguments.length) { return colorRange; }
+    colorRange = value;
+    return chart;
+  };
+
   function chart() {
 
     d3.selectAll('.calendar-heatmap').remove(); // remove the existing chart, if it exists
@@ -37,7 +44,7 @@ function calendarHeatmap() {
     var max = d3.max(chart.data(), function (d) { return d.count; });
 
     // TODO: add legend
-    var color = d3.scale.linear().range(['#D8E6E7', '#218380'])
+    var color = d3.scale.linear().range(chart.colorRange())
       .domain([0, max]);
 
     var tooltip;
