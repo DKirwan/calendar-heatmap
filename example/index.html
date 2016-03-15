@@ -23,7 +23,8 @@
       var heatmap = calendarHeatmap()
                       .data(chartData)
                       .selector('.container')
-                      .colorRange(['#FF3333', '#33FF77']);
+                      .colorRange(['#FF3333', '#33FF77'])
+                      .tooltipEnabled(false);
       heatmap();  // render the chart
     </script>
   </body>
