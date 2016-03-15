@@ -14,7 +14,6 @@ function calendarHeatmap() {
   var data = [];
 	var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
-  var thisChart;
 
   // setters and getters
   chart.data = function (value) {
