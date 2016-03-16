@@ -3,7 +3,7 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 
 ![Reusable D3.js Calendar Heatmap chart](https://raw.githubusercontent.com/DKirwan/calendar-heatmap/develop/example/thumbnail.png)
 
-## TODO's
+## TODO
 
 * ~~Enable/disable tooltip~~
 * Editing of tooltip text
