@@ -1,0 +1,24 @@
+{
+  "name": "calendar-heatmap",
+  "homepage": "https://github.com/DKirwan/calendar-heatmap",
+  "authors": [
+    "Oskar Niburski <oskarniburski@gmail.com>"
+  ],
+  "description": "A d3.js heatmap representing time series data. Inspired by Github's contribution chart",
+  "main": "src/calendar-heatmap.js",
+  "moduleType": [],
+  "keywords": [
+    "d3",
+    "moment",
+    "heatmap"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/_bower_components",
+    "test",
+    "tests"
+  ]
+}
