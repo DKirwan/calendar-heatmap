@@ -3,9 +3,9 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 
 ![Reusable D3.js Calendar Heatmap chart](https://raw.githubusercontent.com/DKirwan/calendar-heatmap/develop/example/thumbnail.png)
 
-## TODO's
+## TODO
 
-* Enable/disable tooltip
+* ~~Enable/disable tooltip~~
 * Editing of tooltip text
 * ~~Editing of the cell gradient colours~~
 * Configuration of the start/end dates
@@ -20,6 +20,7 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 | data | Path to data to render on the chart | none | yes |
 | selector | DOM selector to attach the chart to | body | no |
 | colorRange | Array of colors to use as a gradient in the chart | ['#D8E6E7', '#218380'] | no |
+| tooltipEnabled | Whether it shows a tooltip or not | true | no |
 
 ## Dependencies
 
@@ -44,7 +45,8 @@ var chartData = [{
 var chart1 = calendarHeatmap()
               .data(chartData)
               .selector('#chart-one')
-              .colorRange(['#D8E6E7', '#218380']);
+              .colorRange(['#D8E6E7', '#218380'])
+              .tooltipEnabled(true);
 chart1();  // render the chart
 ```
 
