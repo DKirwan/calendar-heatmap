@@ -42,7 +42,7 @@ function calendarHeatmap() {
 
   function chart() {
 
-    d3.selectAll('.calendar-heatmap').remove(); // remove the existing chart, if it exists
+    d3.select(chart.selector()).selectAll('svg.calendar-heatmap').remove(); // remove the existing chart, if it exists
 
     var dateRange = d3.time.days(yearAgo, now);
     var monthRange = d3.time.months(moment(yearAgo).startOf('month').toDate(), now); // it ignores the first month if the 1st date is after the start of the month
@@ -132,7 +132,7 @@ function calendarHeatmap() {
       var dateStr = moment(d).format('ddd, MMM Do YYYY');
       var count = 0;
       var match = chart.data().find(function (element, index) {
-        return moment(element.date).isSame(d);
+        return moment(element.date).isSame(d, 'day');
       });
       if (match) {
         count = match.count;
