@@ -6,8 +6,8 @@
   </head>
   <body>
     <div class="container"></div>
-    <script src="../vendor/moment.js"></script>
-    <script src="../vendor/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="../src/calendar-heatmap.js"></script>
     <script type="text/javascript">
       var now = moment().endOf('day').toDate();
@@ -19,11 +19,14 @@
         };
       });
 
-      // Using custom colors
       var heatmap = calendarHeatmap()
                       .data(chartData)
                       .selector('.container')
-                      .tooltipEnabled(true);
+                      .tooltipEnabled(true)
+                      .colorRange(['#f4f7f7', '#79a8a9'])
+                      .onClick(function (data) {
+                        console.log('data', data);
+                      });
       heatmap();  // render the chart
     </script>
   </body>
