@@ -198,11 +198,11 @@ function calendarHeatmap() {
       return count;
     }
 
+    var daysOfChart = chart.data().map(function(day){
+      return day.date.toDateString();
+    });
     dayRects.filter(function (d) {
-      var hasItem = chart.data().some(function (element, index) {
-        return moment(d).isSame(element.date, 'day');
-      });
-      return hasItem;
+      return daysOfChart.indexOf(d.toDateString()) > -1;
     }).attr('fill', function (d, i) {
       return color(chart.data()[i].count);
     });
