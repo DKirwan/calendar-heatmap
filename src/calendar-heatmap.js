@@ -13,7 +13,7 @@ function calendarHeatmap() {
   var now = moment().endOf('day').toDate();
   var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
   var data = [];
-	var colorRange = ['#D8E6E7', '#218380'];
+  var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
   var tooltipUnit = 'contribution';
   var legendEnabled = true;
@@ -32,7 +32,7 @@ function calendarHeatmap() {
     return chart;
   };
 
-	chart.colorRange = function (value) {
+  chart.colorRange = function (value) {
     if (!arguments.length) { return colorRange; }
     colorRange = value;
     return chart;
