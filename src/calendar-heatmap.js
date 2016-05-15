@@ -43,7 +43,7 @@ function calendarHeatmap() {
     tooltipEnabled = value;
     return chart;
   };
-  
+
   chart.tooltipUnit = function (value) {
     if (!arguments.length) { return tooltipUnit; }
     tooltipUnit = value;
@@ -117,8 +117,8 @@ function calendarHeatmap() {
             .append('div')
             .attr('class', 'day-cell-tooltip')
             .html(tooltipHTMLForDate(d))
-            .style('left', function() { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
-            .style('top', function() { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px'; });
+            .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
+            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px'; });
         })
         .on('mouseout', function (d, i) {
           tooltip.remove();
@@ -191,7 +191,7 @@ function calendarHeatmap() {
     function tooltipHTMLForDate(d) {
       var dateStr = moment(d).format('ddd, MMM Do YYYY');
       var count = countForDate(d);
-      return '<span><strong>' + (count ? count : 'No') + tooltipUnit + (count === 1 ? '' : 's') + '</strong> on ' + dateStr + '</span>';
+      return '<span><strong>' + (count ? count : 'No') + ' ' + tooltipUnit + (count === 1 ? '' : 's') + '</strong> on ' + dateStr + '</span>';
     }
 
     function countForDate(d) {
@@ -205,9 +205,10 @@ function calendarHeatmap() {
       return count;
     }
 
-    var daysOfChart = chart.data().map(function(day){
+    var daysOfChart = chart.data().map(function (day) {
       return day.date.toDateString();
     });
+
     dayRects.filter(function (d) {
       return daysOfChart.indexOf(d.toDateString()) > -1;
     }).attr('fill', function (d, i) {
