@@ -6,12 +6,11 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 ## TODO
 
 * ~~Enable/disable tooltip~~
-* Editing of tooltip text
+* ~~Editing of tooltip text~~
 * ~~Editing of the cell gradient colours~~
-* Configuration of the start/end dates
 * ~~Add optional callback for click events on the day cells~~
 * ~~Add project to bower~~
-* Remove example and vendor folders to separate `gh-pages` branch
+* Remove example and vendor folders to separate `gh-pages` branch [in progress]
 
 ## Configuration
 
@@ -21,6 +20,7 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 | selector | DOM selector to attach the chart to | body | no |
 | colorRange | Minimum and maximum chart gradient colors | ['#D8E6E7', '#218380'] | no |
 | tooltipEnabled | Option to render a tooltip | true | no |
+| tooltipUnit | Unit to render on the tooltip | 'contributions' | no |
 | legendEnabled | Option to render a legend | true | no |
 | onClick | callback function on day click events (see example below) | null | no |
 
