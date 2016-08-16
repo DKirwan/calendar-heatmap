@@ -113,7 +113,7 @@ function calendarHeatmap() {
 
       if (chart.tooltipEnabled()) {
         dayRects.on('mouseover', function (d, i) {
-          tooltip = d3.select('body')
+          tooltip = d3.select(chart.selector())
             .append('div')
             .attr('class', 'day-cell-tooltip')
             .html(tooltipHTMLForDate(d))
