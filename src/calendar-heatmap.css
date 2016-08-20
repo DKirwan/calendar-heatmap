@@ -25,3 +25,6 @@ rect.day-cell:hover {
 .day-cell-tooltip > span {
   font-family: Helvetica, arial, 'Open Sans', sans-serif
 }
+.calendar-heatmap {
+  box-sizing: initial;
+}
