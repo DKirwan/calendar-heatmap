@@ -1,6 +1,6 @@
 {
   "name": "calendar-heatmap",
-  "version": "0.3.0",
+  "version": "0.4.1",
   "homepage": "https://github.com/DKirwan/calendar-heatmap",
   "description": "A d3.js heatmap representing time series data. Inspired by Github's contribution chart",
   "authors": [

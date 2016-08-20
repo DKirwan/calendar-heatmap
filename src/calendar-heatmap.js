@@ -13,9 +13,9 @@ function calendarHeatmap() {
   var now = moment().endOf('day').toDate();
   var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
   var data = [];
-	var colorRange = ['#D8E6E7', '#218380'];
+  var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
-  var tooltipUnit = 'contributions';
+  var tooltipUnit = 'contribution';
   var legendEnabled = true;
   var onClick = null;
 
@@ -32,7 +32,7 @@ function calendarHeatmap() {
     return chart;
   };
 
-	chart.colorRange = function (value) {
+  chart.colorRange = function (value) {
     if (!arguments.length) { return colorRange; }
     colorRange = value;
     return chart;
@@ -113,7 +113,7 @@ function calendarHeatmap() {
 
       if (chart.tooltipEnabled()) {
         dayRects.on('mouseover', function (d, i) {
-          tooltip = d3.select('body')
+          tooltip = d3.select(chart.selector())
             .append('div')
             .attr('class', 'day-cell-tooltip')
             .html(tooltipHTMLForDate(d))
