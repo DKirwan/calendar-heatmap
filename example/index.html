@@ -23,6 +23,8 @@
                       .data(chartData)
                       .selector('.container')
                       .tooltipEnabled(true)
+                      .allWeekdayNames(true)
+                      .dayNumbersInBox(true)
                       .colorRange(['#f4f7f7', '#79a8a9'])
                       .onClick(function (data) {
                         console.log('data', data);

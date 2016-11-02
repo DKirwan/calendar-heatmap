@@ -6,11 +6,17 @@ text.day-initial {
   font-family: Helvetica, arial, 'Open Sans', sans-serif
 }
 .day-cell {
-  border: 1px solid gray;
+  border: 1px solid gry;
 }
 rect.day-cell:hover {
-  stroke: #555555;
+  stroke: red;
   stroke-width: 1px;
+  cursor: pointer;
+}
+.day-text:hover {
+  stroke: red;
+  stroke-width: 1px;
+  cursor: pointer;
 }
 .day-cell-tooltip {
   position: absolute;

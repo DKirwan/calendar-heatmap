@@ -5,7 +5,7 @@ function calendarHeatmap() {
   var height = 110;
   var legendWidth = 150;
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   var selector = 'body';
   var SQUARE_LENGTH = 11;
   var SQUARE_PADDING = 2;
@@ -15,6 +15,8 @@ function calendarHeatmap() {
   var data = [];
   var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
+  var allWeekdayNames = true;
+  var dayNumbersInBox = true;
   var tooltipUnit = 'contribution';
   var legendEnabled = true;
   var onClick = null;
@@ -44,6 +46,18 @@ function calendarHeatmap() {
     return chart;
   };
 
+  chart.allWeekdayNames = function (value) {
+    if (!arguments.length) { return allWeekdayNames; }
+    allWeekdayNames = value;
+    return chart;
+  };
+
+  chart.dayNumbersInBox = function (value) {
+    if (!arguments.length) { return dayNumbersInBox; }
+    dayNumbersInBox = value;
+    return chart;
+  };
+
   chart.tooltipUnit = function (value) {
     if (!arguments.length) { return tooltipUnit; }
     tooltipUnit = value;
@@ -67,7 +81,7 @@ function calendarHeatmap() {
     d3.select(chart.selector()).selectAll('svg.calendar-heatmap').remove(); // remove the existing chart, if it exists
 
     var dateRange = d3.time.days(yearAgo, now); // generates an array of date objects within the specified range
-    var monthRange = d3.time.months(moment(yearAgo).startOf('month').toDate(), now); // it ignores the first month if the 1st date is after the start of the month
+    var monthRange = d3.time.months(moment(yearAgo).startOf('month' +1 ).toDate(), now); // it ignores the first month if the 1st date is after the start of the month
     var firstDate = moment(dateRange[0]);
     var max = d3.max(chart.data(), function (d) { return d.count; }); // max data value
 
@@ -87,7 +101,7 @@ function calendarHeatmap() {
         .attr('width', width)
         .attr('class', 'calendar-heatmap')
         .attr('height', height)
-        .style('padding', '36px');
+        .style('padding', '23px');
 
       dayRects = svg.selectAll('.day-cell')
         .data(dateRange);  //  array of days for the last yr
@@ -111,8 +125,41 @@ function calendarHeatmap() {
         });
       }
 
+      if (dayNumbersInBox){
+        dayNumbers = svg.selectAll('.day-text')
+        .data(dateRange);  //  array of days for the last yr
+        
+        dayNumbers.enter().append('text')
+        .attr('class', 'day-text')
+        .attr("font-size", "8px")
+        .attr('x', function (d, i) {
+          var cellDate = moment(d);
+          var numSzBlank = 0;
+          if(d.getDate()>9){
+            numSzBlank = 1; 
+          }else{
+            numSzBlank = 3;
+          }
+          var result = cellDate.week() - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
+          return (result * (SQUARE_LENGTH + SQUARE_PADDING)) + (1 * (numSzBlank));
+        })
+        .attr('y', function (d, i) { return MONTH_LABEL_PADDING + 8 + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); })
+        .text(function (d) { return d.getDate() ; });
+      }
+
       if (chart.tooltipEnabled()) {
         dayRects.on('mouseover', function (d, i) {
+          tooltip = d3.select(chart.selector())
+            .append('div')
+            .attr('class', 'day-cell-tooltip')
+            .html(tooltipHTMLForDate(d))
+            .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
+            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px'; });
+        })
+        .on('mouseout', function (d, i) {
+          tooltip.remove();
+        });
+        dayNumbers.on('mouseover', function (d, i) {
           tooltip = d3.select(chart.selector())
             .append('div')
             .attr('class', 'day-cell-tooltip')
@@ -149,7 +196,7 @@ function calendarHeatmap() {
           .attr('y', height + SQUARE_LENGTH)
           .text('Less');
 
-        legendGroup.append('text')
+      legendGroup.append('text')
           .attr('class', 'calendar-heatmap-legend-text')
           .attr('x', (width - legendWidth + SQUARE_PADDING) + (colorRange.length + 1) * 13)
           .attr('y', height + SQUARE_LENGTH)
@@ -177,13 +224,22 @@ function calendarHeatmap() {
           .attr('y', 0);  // fix these to the top
 
       days.forEach(function (day, index) {
-        if (index % 2) {
+        if(allWeekdayNames){
           svg.append('text')
             .attr('class', 'day-initial')
-            .attr('transform', 'translate(-8,' + (SQUARE_LENGTH + SQUARE_PADDING) * (index + 1) + ')')
+            .attr('transform', 'translate(-14,' + (SQUARE_LENGTH + SQUARE_PADDING) * (index + 1) + ')')
             .style('text-anchor', 'middle')
             .attr('dy', '2')
             .text(day);
+        }else{
+          if (index % 2) {
+            svg.append('text')
+              .attr('class', 'day-initial')
+              .attr('transform', 'translate(-14,' + (SQUARE_LENGTH + SQUARE_PADDING) * (index + 1) + ')')
+              .style('text-anchor', 'middle')
+              .attr('dy', '2')
+              .text(day);
+          }
         }
       });
     }
