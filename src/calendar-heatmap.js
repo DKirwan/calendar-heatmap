@@ -166,24 +166,32 @@ function calendarHeatmap() {
 
       if (chart.tooltipEnabled()) {
         dayRects.on('mouseover', function (d, i) {
+          var monthSpacing =  0;
+            if (monthSpace){
+              monthSpacing = moment(d).diff((firstDate).startOf('month'), 'months');
+            }
           tooltip = d3.select(chart.selector())
             .append('div')
             .attr('class', 'day-cell-tooltip')
             .html(tooltipHTMLForDate(d))
-            .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
-            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px'; });
+            .style('left', function () { return (Math.floor(i / 7)+monthSpacing) * SQUARE_LENGTH + 'px'; })
+            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + (MONTH_LABEL_PADDING - 5) * 3 + 'px'; });
         })
         .on('mouseout', function (d, i) {
           tooltip.remove();
         });
         if (dayNumbersInBox){
           dayNumbers.on('mouseover', function (d, i) {
+            var monthSpacing =  0;
+            if (monthSpace){
+              monthSpacing = moment(d).diff((firstDate).startOf('month'), 'months');
+            }
             tooltip = d3.select(chart.selector())
               .append('div')
               .attr('class', 'day-cell-tooltip')
               .html(tooltipHTMLForDate(d))
-              .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
-              .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px'; });
+              .style('left', function () { return (Math.floor(i / 7)+monthSpacing) * SQUARE_LENGTH + 'px'; })
+              .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + (MONTH_LABEL_PADDING - 5) * 3 + 'px'; });
           })
           .on('mouseout', function (d, i) {
             tooltip.remove();
@@ -193,7 +201,7 @@ function calendarHeatmap() {
 
       if (chart.legendEnabled()) {
         var colorRange = [color(0)];
-        for (var i = 3; i > 0; i--) {
+        for (var i = 4; i > 0; i--) {
           colorRange.push(color(max / i));
         }
 
@@ -201,7 +209,7 @@ function calendarHeatmap() {
         legendGroup.selectAll('.calendar-heatmap-legend')
             .data(colorRange)
             .enter()
-          .append('rect')
+            .append('rect')
             .attr('class', 'calendar-heatmap-legend')
             .attr('width', SQUARE_LENGTH)
             .attr('height', SQUARE_LENGTH)
