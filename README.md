@@ -54,6 +54,7 @@ var chart1 = calendarHeatmap()
               .tooltipEnabled(true)
               .allWeekdayNames(true)
               .dayNumbersInBox(true)
+              .monthSpace(false)
               .onClick(function (data) {
                 console.log('onClick callback. Data:', data);
               });
