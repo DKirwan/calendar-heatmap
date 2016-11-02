@@ -17,6 +17,7 @@ function calendarHeatmap() {
   var tooltipEnabled = true;
   var allWeekdayNames = true;
   var dayNumbersInBox = true;
+  var monthSpace = true;
   var tooltipUnit = 'contribution';
   var legendEnabled = true;
   var onClick = null;
@@ -58,6 +59,12 @@ function calendarHeatmap() {
     return chart;
   };
 
+  chart.monthSpace = function (value) {
+    if (!arguments.length) { return monthSpace; }
+    monthSpace = value;
+    return chart;
+  };
+
   chart.tooltipUnit = function (value) {
     if (!arguments.length) { return tooltipUnit; }
     tooltipUnit = value;
@@ -81,10 +88,9 @@ function calendarHeatmap() {
     d3.select(chart.selector()).selectAll('svg.calendar-heatmap').remove(); // remove the existing chart, if it exists
 
     var dateRange = d3.time.days(yearAgo, now); // generates an array of date objects within the specified range
-    var monthRange = d3.time.months(moment(yearAgo).startOf('month' +1 ).toDate(), now); // it ignores the first month if the 1st date is after the start of the month
+    var monthRange = d3.time.months(moment(yearAgo).startOf('month').toDate(), now); // it ignores the first month if the 1st date is after the start of the month
     var firstDate = moment(dateRange[0]);
     var max = d3.max(chart.data(), function (d) { return d.count; }); // max data value
-
     // color range
     var color = d3.scale.linear()
       .range(chart.colorRange())
@@ -92,6 +98,9 @@ function calendarHeatmap() {
 
     var tooltip;
     var dayRects;
+    if (monthSpace){
+      width =  width + (12 * (SQUARE_LENGTH + SQUARE_PADDING));
+    }
 
     drawChart();
 
@@ -113,7 +122,11 @@ function calendarHeatmap() {
         .attr('fill', 'gray')
         .attr('x', function (d, i) {
           var cellDate = moment(d);
-          var result = cellDate.week() - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
+          var monthSpacing =  0;
+          if (monthSpace){//moment(startDate).endOf('month')
+            monthSpacing = cellDate.diff((firstDate).startOf('month'), 'months');
+          }
+          var result = (cellDate.week() + monthSpacing) - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
           return result * (SQUARE_LENGTH + SQUARE_PADDING);
         })
         .attr('y', function (d, i) { return MONTH_LABEL_PADDING + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); });
@@ -140,7 +153,11 @@ function calendarHeatmap() {
           }else{
             numSzBlank = 3;
           }
-          var result = cellDate.week() - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
+          var monthSpacing =  0;
+          if (monthSpace){
+            monthSpacing = cellDate.diff((firstDate).startOf('month'), 'months');
+          }
+          var result = (cellDate.week() + monthSpacing) - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
           return (result * (SQUARE_LENGTH + SQUARE_PADDING)) + (1 * (numSzBlank));
         })
         .attr('y', function (d, i) { return MONTH_LABEL_PADDING + 8 + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); })
@@ -159,17 +176,19 @@ function calendarHeatmap() {
         .on('mouseout', function (d, i) {
           tooltip.remove();
         });
-        dayNumbers.on('mouseover', function (d, i) {
-          tooltip = d3.select(chart.selector())
-            .append('div')
-            .attr('class', 'day-cell-tooltip')
-            .html(tooltipHTMLForDate(d))
-            .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
-            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px'; });
-        })
-        .on('mouseout', function (d, i) {
-          tooltip.remove();
-        });
+        if (dayNumbersInBox){
+          dayNumbers.on('mouseover', function (d, i) {
+            tooltip = d3.select(chart.selector())
+              .append('div')
+              .attr('class', 'day-cell-tooltip')
+              .html(tooltipHTMLForDate(d))
+              .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
+              .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px'; });
+          })
+          .on('mouseout', function (d, i) {
+            tooltip.remove();
+          });
+        }
       }
 
       if (chart.legendEnabled()) {
@@ -214,12 +233,15 @@ function calendarHeatmap() {
           })
           .attr('x', function (d, i) {
             var matchIndex = 0;
+            var monthSpacing =  0;
+            if (monthSpace){
+              monthSpacing = moment(d).diff((firstDate).startOf('month'), 'months');
+            }
             dateRange.find(function (element, index) {
               matchIndex = index;
               return moment(d).isSame(element, 'month') && moment(d).isSame(element, 'year');
             });
-
-            return Math.floor(matchIndex / 7) * (SQUARE_LENGTH + SQUARE_PADDING);
+            return ((Math.floor(matchIndex / 7)+monthSpacing) * (SQUARE_LENGTH + SQUARE_PADDING));
           })
           .attr('y', 0);  // fix these to the top
 
