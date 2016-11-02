@@ -52,6 +52,8 @@ var chart1 = calendarHeatmap()
               .selector('#chart-one')
               .colorRange(['#D8E6E7', '#218380'])
               .tooltipEnabled(true)
+              .allWeekdayNames(true)
+              .dayNumbersInBox(true)
               .onClick(function (data) {
                 console.log('onClick callback. Data:', data);
               });
