@@ -1,13 +1,16 @@
 
 function calendarHeatmap() {
   // defaults
+  var SQUARE_LENGTH = 10;
   var width = 750;
+  width = SQUARE_LENGTH * (52+12);
   var height = 110;
   var legendWidth = 150;
+  var dayNumbersFontSz = 8;
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   var selector = 'body';
-  var SQUARE_LENGTH = 11;
+  
   var SQUARE_PADDING = 2;
   var MONTH_LABEL_PADDING = 6;
   var now = moment().endOf('day').toDate();
@@ -139,12 +142,12 @@ function calendarHeatmap() {
       }
 
       if (dayNumbersInBox){
-        dayNumbers = svg.selectAll('.day-text')
+        dayNumbers = svg.selectAll('.day-numbers')
         .data(dateRange);  //  array of days for the last yr
         
         dayNumbers.enter().append('text')
-        .attr('class', 'day-text')
-        .attr("font-size", "8px")
+        .attr('class', 'day-numbers')
+        .attr("font-size", dayNumbersFontSz+"px")
         .attr('x', function (d, i) {
           var cellDate = moment(d);
           var numSzBlank = 0;
@@ -158,9 +161,9 @@ function calendarHeatmap() {
             monthSpacing = cellDate.diff((firstDate).startOf('month'), 'months');
           }
           var result = (cellDate.week() + monthSpacing) - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
-          return (result * (SQUARE_LENGTH + SQUARE_PADDING)) + (1 * (numSzBlank));
+          return (result * (SQUARE_LENGTH + SQUARE_PADDING)) + (((SQUARE_LENGTH-dayNumbersFontSz)/4) * (numSzBlank));
         })
-        .attr('y', function (d, i) { return MONTH_LABEL_PADDING + 8 + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); })
+        .attr('y', function (d, i) { return MONTH_LABEL_PADDING + dayNumbersFontSz + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); })
         .text(function (d) { return d.getDate() ; });
       }
 
