@@ -18,6 +18,7 @@ function calendarHeatmap() {
   var tooltipUnit = 'contribution';
   var legendEnabled = true;
   var onClick = null;
+  var weekStart = 0; //0 for Sunday, 1 for Monday
 
   // setters and getters
   chart.data = function (value) {
@@ -102,7 +103,17 @@ function calendarHeatmap() {
           var result = cellDate.week() - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
           return result * (SQUARE_LENGTH + SQUARE_PADDING);
         })
-        .attr('y', function (d, i) { return MONTH_LABEL_PADDING + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); });
+        .attr('y', function (d, i) {
+          var weekDay = d.getDay();
+          if (weekStart === 1) {
+            if (weekDay === 0) {
+              weekDay = 6;
+            } else {
+              weekDay = weekDay - 1;
+            }
+          }
+          return MONTH_LABEL_PADDING + weekDay * (SQUARE_LENGTH + SQUARE_PADDING);
+        });
 
       if (typeof onClick === 'function') {
         dayRects.on('click', function (d) {
@@ -177,6 +188,13 @@ function calendarHeatmap() {
           .attr('y', 0);  // fix these to the top
 
       days.forEach(function (day, index) {
+        if (weekStart === 1) {
+          if (index === 0) {
+            index = 6;
+          } else {
+            index = index - 1;
+          }
+        }
         if (index % 2) {
           svg.append('text')
             .attr('class', 'day-initial')
