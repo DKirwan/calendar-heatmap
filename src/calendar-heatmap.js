@@ -129,7 +129,17 @@ function calendarHeatmap() {
             .attr('class', 'day-cell-tooltip')
             .html(tooltipHTMLForDate(d))
             .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
-            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px'; });
+            .style('top', function () {
+              var weekDay = d.getDay();
+              if (weekStart === 1) {
+                if (weekDay === 0) {
+                  weekDay = 6;
+                } else {
+                  weekDay = weekDay - 1;
+                }
+              }            
+              return weekDay * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px';
+            });
         })
         .on('mouseout', function (d, i) {
           tooltip.remove();
