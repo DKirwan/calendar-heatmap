@@ -3,7 +3,6 @@ function calendarHeatmap() {
   // defaults
   var SQUARE_LENGTH = 10;
   var width = 750;
-  width = SQUARE_LENGTH * (52+12);
   var height = 110;
   var legendWidth = 150;
   var dayNumbersFontSz = 8;
@@ -12,13 +11,14 @@ function calendarHeatmap() {
   var selector = 'body';
   
   var SQUARE_PADDING = 2;
+  width = (SQUARE_LENGTH + SQUARE_PADDING) * 53 ;//for determining svg width by square size; 
   var MONTH_LABEL_PADDING = 6;
   var now = moment().endOf('day').toDate();
   var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
   var data = [];
   var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
-  var allWeekdayNames = true;
+  var showDayNames = true;
   var dayNumbersInBox = true;
   var monthSpace = true;
   var tooltipUnit = 'contribution';
@@ -50,9 +50,9 @@ function calendarHeatmap() {
     return chart;
   };
 
-  chart.allWeekdayNames = function (value) {
-    if (!arguments.length) { return allWeekdayNames; }
-    allWeekdayNames = value;
+  chart.showDayNames = function (value) {
+    if (!arguments.length) { return showDayNames; }
+    showDayNames = value;
     return chart;
   };
 
@@ -126,11 +126,11 @@ function calendarHeatmap() {
         .attr('x', function (d, i) {
           var cellDate = moment(d);
           var monthSpacing =  0;
-          if (monthSpace){//moment(startDate).endOf('month')
+          if (monthSpace){
             monthSpacing = cellDate.diff((firstDate).startOf('month'), 'months');
           }
           var result = (cellDate.week() + monthSpacing) - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
-          return result * (SQUARE_LENGTH + SQUARE_PADDING);
+          return (result-1) * (SQUARE_LENGTH + SQUARE_PADDING);
         })
         .attr('y', function (d, i) { return MONTH_LABEL_PADDING + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); });
 
@@ -147,21 +147,19 @@ function calendarHeatmap() {
         
         dayNumbers.enter().append('text')
         .attr('class', 'day-numbers')
-        .attr("font-size", dayNumbersFontSz+"px")
+        .attr('font-size', dayNumbersFontSz + 'px')
         .attr('x', function (d, i) {
           var cellDate = moment(d);
-          var numSzBlank = 0;
-          if(d.getDate()>9){
-            numSzBlank = 1; 
-          }else{
-            numSzBlank = 3;
+          var dayTextPadding = 3;
+          if(d.getDate() > 9){
+            dayTextPadding = 1; 
           }
           var monthSpacing =  0;
           if (monthSpace){
             monthSpacing = cellDate.diff((firstDate).startOf('month'), 'months');
           }
           var result = (cellDate.week() + monthSpacing) - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
-          return (result * (SQUARE_LENGTH + SQUARE_PADDING)) + (((SQUARE_LENGTH-dayNumbersFontSz)/4) * (numSzBlank));
+          return ((result - 1) * (SQUARE_LENGTH + SQUARE_PADDING)) + (((SQUARE_LENGTH - dayNumbersFontSz) / 4) * (dayTextPadding));
         })
         .attr('y', function (d, i) { return MONTH_LABEL_PADDING + dayNumbersFontSz + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); })
         .text(function (d) { return d.getDate() ; });
@@ -226,7 +224,7 @@ function calendarHeatmap() {
           .attr('y', height + SQUARE_LENGTH)
           .text('Less');
 
-      legendGroup.append('text')
+        legendGroup.append('text')
           .attr('class', 'calendar-heatmap-legend-text')
           .attr('x', (width - legendWidth + SQUARE_PADDING) + (colorRange.length + 1) * 13)
           .attr('y', height + SQUARE_LENGTH)
@@ -252,27 +250,18 @@ function calendarHeatmap() {
               matchIndex = index;
               return moment(d).isSame(element, 'month') && moment(d).isSame(element, 'year');
             });
-            return ((Math.floor(matchIndex / 7)+monthSpacing) * (SQUARE_LENGTH + SQUARE_PADDING));
+            return ((Math.floor(matchIndex / 7) + monthSpacing) * (SQUARE_LENGTH + SQUARE_PADDING));
           })
           .attr('y', 0);  // fix these to the top
 
       days.forEach(function (day, index) {
-        if(allWeekdayNames){
+        if(showDayNames){
           svg.append('text')
             .attr('class', 'day-initial')
             .attr('transform', 'translate(-14,' + (SQUARE_LENGTH + SQUARE_PADDING) * (index + 1) + ')')
             .style('text-anchor', 'middle')
             .attr('dy', '2')
             .text(day);
-        }else{
-          if (index % 2) {
-            svg.append('text')
-              .attr('class', 'day-initial')
-              .attr('transform', 'translate(-14,' + (SQUARE_LENGTH + SQUARE_PADDING) * (index + 1) + ')')
-              .style('text-anchor', 'middle')
-              .attr('dy', '2')
-              .text(day);
-          }
         }
       });
     }

@@ -6,15 +6,15 @@ text.day-initial {
   font-family: Helvetica, arial, 'Open Sans', sans-serif
 }
 .day-cell {
-  border: 1px solid gry;
+  border: 1px solid gray;
 }
 rect.day-cell:hover {
-  stroke: red;
+  stroke: #555555;
   stroke-width: 1px;
   cursor: pointer;
 }
 .day-text:hover {
-  stroke: red;
+  stroke: #555555;
   stroke-width: 1px;
   cursor: pointer;
 }
