@@ -104,15 +104,7 @@ function calendarHeatmap() {
           return result * (SQUARE_LENGTH + SQUARE_PADDING);
         })
         .attr('y', function (d, i) {
-          var weekDay = d.getDay();
-          if (weekStart === 1) {
-            if (weekDay === 0) {
-              weekDay = 6;
-            } else {
-              weekDay = weekDay - 1;
-            }
-          }
-          return MONTH_LABEL_PADDING + weekDay * (SQUARE_LENGTH + SQUARE_PADDING);
+          return MONTH_LABEL_PADDING + formatWeekday(d.getDay()) * (SQUARE_LENGTH + SQUARE_PADDING);
         });
 
       if (typeof onClick === 'function') {
@@ -130,15 +122,7 @@ function calendarHeatmap() {
             .html(tooltipHTMLForDate(d))
             .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
             .style('top', function () {
-              var weekDay = d.getDay();
-              if (weekStart === 1) {
-                if (weekDay === 0) {
-                  weekDay = 6;
-                } else {
-                  weekDay = weekDay - 1;
-                }
-              }            
-              return weekDay * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px';
+              return formatWeekday(d.getDay()) * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px';
             });
         })
         .on('mouseout', function (d, i) {
@@ -198,13 +182,7 @@ function calendarHeatmap() {
           .attr('y', 0);  // fix these to the top
 
       days.forEach(function (day, index) {
-        if (weekStart === 1) {
-          if (index === 0) {
-            index = 6;
-          } else {
-            index = index - 1;
-          }
-        }
+        index = formatWeekday(index);
         if (index % 2) {
           svg.append('text')
             .attr('class', 'day-initial')
@@ -231,6 +209,17 @@ function calendarHeatmap() {
         count = match.count;
       }
       return count;
+    }
+
+    function formatWeekday(weekDay) {
+      if (weekStart === 1) {
+        if (weekDay === 0) {
+          return 6;
+        } else {
+          return weekDay - 1;
+        }
+      }
+      return weekDay;
     }
 
     var daysOfChart = chart.data().map(function (day) {
