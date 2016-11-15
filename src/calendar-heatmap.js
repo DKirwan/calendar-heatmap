@@ -18,6 +18,7 @@ function calendarHeatmap() {
   var tooltipUnit = 'contribution';
   var legendEnabled = true;
   var onClick = null;
+  var weekStart = 0; //0 for Sunday, 1 for Monday
 
   // setters and getters
   chart.data = function (value) {
@@ -102,7 +103,9 @@ function calendarHeatmap() {
           var result = cellDate.week() - firstDate.week() + (firstDate.weeksInYear() * (cellDate.weekYear() - firstDate.weekYear()));
           return result * (SQUARE_LENGTH + SQUARE_PADDING);
         })
-        .attr('y', function (d, i) { return MONTH_LABEL_PADDING + d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING); });
+        .attr('y', function (d, i) {
+          return MONTH_LABEL_PADDING + formatWeekday(d.getDay()) * (SQUARE_LENGTH + SQUARE_PADDING);
+        });
 
       if (typeof onClick === 'function') {
         dayRects.on('click', function (d) {
@@ -118,7 +121,9 @@ function calendarHeatmap() {
             .attr('class', 'day-cell-tooltip')
             .html(tooltipHTMLForDate(d))
             .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
-            .style('top', function () { return d.getDay() * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px'; });
+            .style('top', function () {
+              return formatWeekday(d.getDay()) * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px';
+            });
         })
         .on('mouseout', function (d, i) {
           tooltip.remove();
@@ -177,6 +182,7 @@ function calendarHeatmap() {
           .attr('y', 0);  // fix these to the top
 
       days.forEach(function (day, index) {
+        index = formatWeekday(index);
         if (index % 2) {
           svg.append('text')
             .attr('class', 'day-initial')
@@ -203,6 +209,17 @@ function calendarHeatmap() {
         count = match.count;
       }
       return count;
+    }
+
+    function formatWeekday(weekDay) {
+      if (weekStart === 1) {
+        if (weekDay === 0) {
+          return 6;
+        } else {
+          return weekDay - 1;
+        }
+      }
+      return weekDay;
     }
 
     var daysOfChart = chart.data().map(function (day) {
