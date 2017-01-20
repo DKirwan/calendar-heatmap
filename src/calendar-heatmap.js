@@ -13,6 +13,7 @@ function calendarHeatmap() {
   var now = moment().endOf('day').toDate();
   var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
   var data = [];
+  var max = null;
   var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
   var tooltipUnit = 'contribution';
@@ -24,6 +25,12 @@ function calendarHeatmap() {
   chart.data = function (value) {
     if (!arguments.length) { return data; }
     data = value;
+    return chart;
+  };
+
+  chart.max = function (value) {
+    if (!arguments.length) { return max; }
+    max = value;
     return chart;
   };
 
@@ -70,7 +77,7 @@ function calendarHeatmap() {
     var dateRange = d3.time.days(yearAgo, now); // generates an array of date objects within the specified range
     var monthRange = d3.time.months(moment(yearAgo).startOf('month').toDate(), now); // it ignores the first month if the 1st date is after the start of the month
     var firstDate = moment(dateRange[0]);
-    var max = d3.max(chart.data(), function (d) { return d.count; }); // max data value
+    if (max === null) { max = d3.max(chart.data(), function (d) { return d.count; }); } // max data value
 
     // color range
     var color = d3.scale.linear()

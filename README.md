@@ -18,6 +18,7 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 |:------------- |:-------------|:-----:|:-----:|
 | data | Chart data | none | yes |
 | selector | DOM selector to attach the chart to | body | no |
+| max | Maximum count | max found in data | no |
 | colorRange | Minimum and maximum chart gradient colors | ['#D8E6E7', '#218380'] | no |
 | tooltipEnabled | Option to render a tooltip | true | no |
 | tooltipUnit | Unit to render on the tooltip | 'contributions' | no |
