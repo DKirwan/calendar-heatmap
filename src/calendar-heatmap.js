@@ -12,6 +12,7 @@ function calendarHeatmap() {
   var MONTH_LABEL_PADDING = 6;
   var now = moment().endOf('day').toDate();
   var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+  var startDate = null;
   var data = [];
   var max = null;
   var colorRange = ['#D8E6E7', '#218380'];
@@ -37,6 +38,13 @@ function calendarHeatmap() {
   chart.selector = function (value) {
     if (!arguments.length) { return selector; }
     selector = value;
+    return chart;
+  };
+
+  chart.startDate = function (value) {
+    if (!arguments.length) { return startDate; }
+    yearAgo = value;
+    now = moment(value).endOf('day').add(1, 'year').toDate();
     return chart;
   };
 
