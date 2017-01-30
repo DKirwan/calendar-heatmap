@@ -12,7 +12,9 @@ function calendarHeatmap() {
   var MONTH_LABEL_PADDING = 6;
   var now = moment().endOf('day').toDate();
   var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+  var startDate = null;
   var data = [];
+  var max = null;
   var colorRange = ['#D8E6E7', '#218380'];
   var tooltipEnabled = true;
   var tooltipUnit = 'contribution';
@@ -27,9 +29,22 @@ function calendarHeatmap() {
     return chart;
   };
 
+  chart.max = function (value) {
+    if (!arguments.length) { return max; }
+    max = value;
+    return chart;
+  };
+
   chart.selector = function (value) {
     if (!arguments.length) { return selector; }
     selector = value;
+    return chart;
+  };
+
+  chart.startDate = function (value) {
+    if (!arguments.length) { return startDate; }
+    yearAgo = value;
+    now = moment(value).endOf('day').add(1, 'year').toDate();
     return chart;
   };
 
@@ -70,7 +85,7 @@ function calendarHeatmap() {
     var dateRange = d3.time.days(yearAgo, now); // generates an array of date objects within the specified range
     var monthRange = d3.time.months(moment(yearAgo).startOf('month').toDate(), now); // it ignores the first month if the 1st date is after the start of the month
     var firstDate = moment(dateRange[0]);
-    var max = d3.max(chart.data(), function (d) { return d.count; }); // max data value
+    if (max === null) { max = d3.max(chart.data(), function (d) { return d.count; }); } // max data value
 
     // color range
     var color = d3.scale.linear()
@@ -84,6 +99,7 @@ function calendarHeatmap() {
 
     function drawChart() {
       var svg = d3.select(chart.selector())
+        .style('position', 'relative')
         .append('svg')
         .attr('width', width)
         .attr('class', 'calendar-heatmap')
@@ -122,7 +138,7 @@ function calendarHeatmap() {
             .html(tooltipHTMLForDate(d))
             .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
             .style('top', function () {
-              return formatWeekday(d.getDay()) * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px';
+              return formatWeekday(d.getDay()) * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 2 + 'px';
             });
         })
         .on('mouseout', function (d, i) {
