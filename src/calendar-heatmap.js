@@ -4,8 +4,6 @@ function calendarHeatmap() {
   var width = 750;
   var height = 110;
   var legendWidth = 150;
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   var selector = 'body';
   var SQUARE_LENGTH = 11;
   var SQUARE_PADDING = 2;
@@ -21,6 +19,14 @@ function calendarHeatmap() {
   var legendEnabled = true;
   var onClick = null;
   var weekStart = 0; //0 for Sunday, 1 for Monday
+  var locale = {
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    No: 'No',
+    on: 'on',
+    Less: 'Less',
+    More: 'More'
+  };
 
   // setters and getters
   chart.data = function (value) {
@@ -75,6 +81,12 @@ function calendarHeatmap() {
   chart.onClick = function (value) {
     if (!arguments.length) { return onClick(); }
     onClick = value;
+    return chart;
+  };
+
+  chart.locale = function (value) {
+    if (!arguments.length) { return locale; }
+    locale = value;
     return chart;
   };
 
@@ -165,16 +177,16 @@ function calendarHeatmap() {
             .attr('fill', function (d) { return d; });
 
         legendGroup.append('text')
-          .attr('class', 'calendar-heatmap-legend-text')
+          .attr('class', 'calendar-heatmap-legend-text calendar-heatmap-legend-text-less')
           .attr('x', width - legendWidth - 13)
           .attr('y', height + SQUARE_LENGTH)
-          .text('Less');
+          .text(locale.Less);
 
         legendGroup.append('text')
-          .attr('class', 'calendar-heatmap-legend-text')
+          .attr('class', 'calendar-heatmap-legend-text calendar-heatmap-legend-text-more')
           .attr('x', (width - legendWidth + SQUARE_PADDING) + (colorRange.length + 1) * 13)
           .attr('y', height + SQUARE_LENGTH)
-          .text('More');
+          .text(locale.More);
       }
 
       dayRects.exit().remove();
@@ -184,7 +196,7 @@ function calendarHeatmap() {
           .attr('class', 'month-name')
           .style()
           .text(function (d) {
-            return months[d.getMonth()];
+            return locale.months[d.getMonth()];
           })
           .attr('x', function (d, i) {
             var matchIndex = 0;
@@ -197,7 +209,7 @@ function calendarHeatmap() {
           })
           .attr('y', 0);  // fix these to the top
 
-      days.forEach(function (day, index) {
+      locale.days.forEach(function (day, index) {
         index = formatWeekday(index);
         if (index % 2) {
           svg.append('text')
@@ -210,10 +222,25 @@ function calendarHeatmap() {
       });
     }
 
+    function pluralizedTooltipUnit (count) {
+      if ('string' === typeof tooltipUnit) {
+        return (tooltipUnit + (count === 1 ? '' : 's'));
+      }
+      for (var i in tooltipUnit) {
+        var _rule = tooltipUnit[i];
+        var _min = _rule.min;
+        var _max = _rule.max || _rule.min;
+        _max = _max === 'Infinity' ? Infinity : _max;
+        if (count >= _min && count <= _max) {
+          return _rule.unit;
+        }
+      }
+    }
+
     function tooltipHTMLForDate(d) {
       var dateStr = moment(d).format('ddd, MMM Do YYYY');
       var count = countForDate(d);
-      return '<span><strong>' + (count ? count : 'No') + ' ' + tooltipUnit + (count === 1 ? '' : 's') + '</strong> on ' + dateStr + '</span>';
+      return '<span><strong>' + (count ? count : locale.No) + ' ' + pluralizedTooltipUnit(count) + '</strong> ' + locale.on + ' ' + dateStr + '</span>';
     }
 
     function countForDate(d) {

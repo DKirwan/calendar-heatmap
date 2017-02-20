@@ -22,9 +22,23 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 | startDate | Date to start heatmap at | 1 year ago | no |
 | colorRange | Minimum and maximum chart gradient colors | ['#D8E6E7', '#218380'] | no |
 | tooltipEnabled | Option to render a tooltip | true | no |
-| tooltipUnit | Unit to render on the tooltip | 'contributions' | no |
+| tooltipUnit | Unit to render on the tooltip, can be object for pluralization control | 'contributions' | no |
 | legendEnabled | Option to render a legend | true | no |
 | onClick | callback function on day click events (see example below) | null | no |
+| locale | Object to translate every word used, except for tooltipUnit | see below | no |
+
+### locale default object
+
+```javascript
+{
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    No: 'No',
+    on: 'on',
+    Less: 'Less',
+    More: 'More'
+}
+```
 
 ## Dependencies
 
@@ -57,6 +71,21 @@ var chart1 = calendarHeatmap()
               .onClick(function (data) {
                 console.log('onClick callback. Data:', data);
               });
+chart1();  // render the chart
+```
+
+### control unit pluralization
+
+```javascript
+var chart1 = calendarHeatmap()
+              .data(chartData)
+              .tooltipUnit(
+                [
+                  {min: 0, unit: 'contribution'},
+                  {min: 1, max: 1, unit: 'contribution'},
+                  {min: 2, max: 'Infinity', unit: 'contributions'}
+                ]
+              );
 chart1();  // render the chart
 ```
 
