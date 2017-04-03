@@ -3,15 +3,6 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 
 ![Reusable D3.js Calendar Heatmap chart](https://raw.githubusercontent.com/DKirwan/calendar-heatmap/develop/example/thumbnail.png)
 
-## TODO
-
-* ~~Enable/disable tooltip~~
-* ~~Editing of tooltip text~~
-* ~~Editing of the cell gradient colours~~
-* ~~Add optional callback for click events on the day cells~~
-* ~~Add project to bower~~
-* Remove example and vendor folders to separate `gh-pages` branch [in progress]
-
 ## Configuration
 
 |Property        | Usage           | Default  | Required |
@@ -27,7 +18,7 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 | onClick | callback function on day click events (see example below) | null | no |
 | locale | Object to translate every word used, except for tooltipUnit | see below | no |
 
-### locale default object
+### Default locale object
 
 ```javascript
 {
