@@ -8,6 +8,12 @@ text.day-initial {
 rect.day-cell:hover {
   stroke: #555555;
   stroke-width: 1px;
+  cursor: pointer;
+}
+.day-text:hover {
+  stroke: #555555;
+  stroke-width: 1px;
+  cursor: pointer;
 }
 .day-cell-tooltip {
   position: absolute;

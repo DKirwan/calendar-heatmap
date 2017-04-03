@@ -23,7 +23,10 @@
                       .data(chartData)
                       .selector('.container')
                       .tooltipEnabled(true)
-                      .colorRange(['#f4f7f7', '#79a8a9'])
+                      .showDayNames(true)
+                      .dayNumbersInBox(true)
+                      .monthSpace(true)
+                      .colorRange(['#D8E6E7', '#218380'])
                       .onClick(function (data) {
                         console.log('data', data);
                       });

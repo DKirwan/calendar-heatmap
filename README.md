@@ -1,7 +1,7 @@
 # D3 Calendar Heatmap
 A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by Github's contribution chart
 
-![Reusable D3.js Calendar Heatmap chart](https://raw.githubusercontent.com/DKirwan/calendar-heatmap/develop/example/thumbnail.png)
+![Reusable D3.js Calendar Heatmap chart](https://raw.githubusercontent.com/khairulhasanmd/calendar-heatmap/master/example/thumbnail.png)
 
 ## Configuration
 
@@ -59,6 +59,9 @@ var chart1 = calendarHeatmap()
               .selector('#chart-one')
               .colorRange(['#D8E6E7', '#218380'])
               .tooltipEnabled(true)
+              .allWeekdayNames(true)
+              .dayNumbersInBox(true)
+              .monthSpace(true)
               .onClick(function (data) {
                 console.log('onClick callback. Data:', data);
               });
