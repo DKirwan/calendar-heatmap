@@ -269,11 +269,6 @@ function calendarHeatmap() {
       return day.date.toDateString();
     });
 
-    dayRects.filter(function (d) {
-      return daysOfChart.indexOf(d.toDateString()) > -1;
-    }).attr('fill', function (d, i) {
-      return color(chart.data()[i].count);
-    });
   }
 
   return chart;
