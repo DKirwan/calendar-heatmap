@@ -97,7 +97,11 @@ function calendarHeatmap() {
     var dateRange = d3.time.days(yearAgo, now); // generates an array of date objects within the specified range
     var monthRange = d3.time.months(moment(yearAgo).startOf('month').toDate(), now); // it ignores the first month if the 1st date is after the start of the month
     var firstDate = moment(dateRange[0]);
-    if (max === null) { max = d3.max(chart.data(), function (d) { return d.count; }); } // max data value
+    if (chart.data().length == 0) {
+      max = 0;
+    } else if (max === null) {
+      max = d3.max(chart.data(), function (d) { return d.count; }); // max data value
+    }
 
     // color range
     var color = d3.scale.linear()
@@ -269,11 +273,6 @@ function calendarHeatmap() {
       return day.date.toDateString();
     });
 
-    dayRects.filter(function (d) {
-      return daysOfChart.indexOf(d.toDateString()) > -1;
-    }).attr('fill', function (d, i) {
-      return color(chart.data()[i].count);
-    });
   }
 
   return chart;
