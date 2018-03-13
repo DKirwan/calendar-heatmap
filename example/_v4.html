@@ -1,0 +1,36 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>D3.js v4 Calendar Heatmap</title>
+  <link rel="stylesheet" type="text/css" href="../src/calendar-heatmap.css">
+</head>
+
+<body>
+  <div class="container"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+  <script src="../src/calendar-heatmap.js"></script>
+  <script type="text/javascript">
+    var now = moment().endOf('day').toDate();
+    var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+    var chartData = d3.timeDays(yearAgo, now).map(function (dateElement) {
+      return {
+        date: dateElement,
+        count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 10)
+      };
+    });
+
+    var heatmap = calendarHeatmap()
+      .data(chartData)
+      .selector('.container')
+      .tooltipEnabled(true)
+      .colorRange(['#f4f7f7', '#79a8a9'])
+      .onClick(function (data) {
+        console.log('data', data);
+      });
+    heatmap();  // render the chart
+  </script>
+</body>
+
+</html>
