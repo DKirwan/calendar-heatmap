@@ -27,6 +27,7 @@ function calendarHeatmap() {
     Less: 'Less',
     More: 'More'
   };
+  var v = Number(d3.version.split('.')[0]);
 
   // setters and getters
   chart.data = function (value) {
@@ -125,7 +126,7 @@ function calendarHeatmap() {
       dayRects = svg.selectAll('.day-cell')
         .data(dateRange);  //  array of days for the last yr
 
-      dayRects.enter().append('rect')
+      var enterSelection = dayRects.enter().append('rect')
         .attr('class', 'day-cell')
         .attr('width', SQUARE_LENGTH)
         .attr('height', SQUARE_LENGTH)
@@ -140,14 +141,14 @@ function calendarHeatmap() {
         });
 
       if (typeof onClick === 'function') {
-        dayRects.on('click', function (d) {
+        (v === 3 ? enterSelection : enterSelection.merge(dayRects)).on('click', function(d) {
           var count = countForDate(d);
           onClick({ date: d, count: count});
         });
       }
 
       if (chart.tooltipEnabled()) {
-        dayRects.on('mouseover', function (d, i) {
+        (v === 3 ? enterSelection : enterSelection.merge(dayRects)).on('mouseover', function(d, i) {
           tooltip = d3.select(chart.selector())
             .append('div')
             .attr('class', 'day-cell-tooltip')
