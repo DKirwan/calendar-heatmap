@@ -11,6 +11,7 @@ function calendarHeatmap() {
   var now = moment().endOf('day').toDate();
   var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
   var startDate = null;
+  var counterMap= {};
   var data = [];
   var max = null;
   var colorRange = ['#D8E6E7', '#218380'];
@@ -32,6 +33,15 @@ function calendarHeatmap() {
   chart.data = function (value) {
     if (!arguments.length) { return data; }
     data = value;
+
+    counterMap= {};
+
+    data.forEach(function (element, index) {
+        var key= moment(element.date).format( 'YYYY-MM-DD' );
+        var counter= counterMap[key] || 0;
+        counterMap[key]= counter + element.count;
+    });
+
     return chart;
   };
 
@@ -244,14 +254,8 @@ function calendarHeatmap() {
     }
 
     function countForDate(d) {
-      var count = 0;
-      var match = chart.data().find(function (element, index) {
-        return moment(element.date).isSame(d, 'day');
-      });
-      if (match) {
-        count = match.count;
-      }
-      return count;
+        var key= moment(d).format( 'YYYY-MM-DD' );
+        return counterMap[key] || 0;
     }
 
     function formatWeekday(weekDay) {
