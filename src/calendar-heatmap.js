@@ -28,6 +28,13 @@ function calendarHeatmap() {
     Less: 'Less',
     More: 'More'
   };
+  var tooltipTextEnabled = false;
+  var tooltipText = {
+     singular: '{count} ' + tooltipUnit + ' ' + locale.on + ' {date}',
+     plural: '{count} ' + tooltipUnit + 's ' + locale.on + ' {date}',
+     none: locale.No + ' ' + tooltipUnit + 's ' + locale.on + ' {date}',
+  };
+  var tooltipDateFormat = 'ddd, MMM Do YYYY';
   var v = Number(d3.version.split('.')[0]);
 
   // setters and getters
@@ -101,6 +108,35 @@ function calendarHeatmap() {
     return chart;
   };
 
+  chart.tooltipTextEnabled = function (value) {
+     if (!arguments.length) { return tooltipTextEnabled; }
+     tooltipTextEnabled = value;
+     return chart;
+  };
+
+  chart.tooltipText = function(value) {
+    if (!arguments.length) { return tooltipText; }
+    if (value.hasOwnProperty('singular') && value.hasOwnProperty('plural') && value.hasOwnProperty('none')) {
+      var singularHasKeys = (value.singular.indexOf('{count}') !== -1 && value.singular.indexOf('{date}') !== -1);
+      var pluralHasKeys = (value.plural.indexOf('{count}') !== -1 && value.plural.indexOf('{date}') !== -1);
+      if (singularHasKeys && pluralHasKeys) {
+        tooltipText = value;
+        return chart;
+      }
+      console.error('The plural and singular properties need two key as \'{count}\' and \'{date}\'');
+      return tooltipText;
+    } else {
+      console.error('tooltipText option needs 3 properties: \'plural\',\'singular\' and \'none\' texts');
+      return tooltipText;
+    }
+  };
+  
+  chart.tooltipDateFormat = function (value) {
+    if (!arguments.length) { return tooltipDateFormat; }
+    tooltipDateFormat = value;
+    return chart;
+  };
+
   function chart() {
 
     d3.select(chart.selector()).selectAll('svg.calendar-heatmap').remove(); // remove the existing chart, if it exists
@@ -157,7 +193,7 @@ function calendarHeatmap() {
         });
       }
 
-      if (chart.tooltipEnabled()) {
+      if (chart.tooltipEnabled() || chart.tooltipTextEnabled()) {
         (v === 3 ? enterSelection : enterSelection.merge(dayRects)).on('mouseover', function(d, i) {
           tooltip = d3.select(chart.selector())
             .append('div')
@@ -252,9 +288,20 @@ function calendarHeatmap() {
     }
 
     function tooltipHTMLForDate(d) {
-      var dateStr = moment(d).format('ddd, MMM Do YYYY');
+      var dateStr = moment(d).format(tooltipDateFormat);
       var count = countForDate(d);
-      return '<span><strong>' + (count ? count : locale.No) + ' ' + pluralizedTooltipUnit(count) + '</strong> ' + locale.on + ' ' + dateStr + '</span>';
+      var text = '';
+      if (tooltipTextEnabled) {
+        if (count !== 0) {
+            text = count > 1 ? tooltipText.plural : tooltipText.singular;
+        } else {
+            text = tooltipText.none;
+        }
+        text = text.replace('{count}', count).replace('{date}', dateStr);
+      } else {
+        text = '<strong>' + (count ? count : locale.No) + ' ' + pluralizedTooltipUnit(count) + '</strong> ' + locale.on + ' ' + dateStr;
+      }
+      return '<span>' + text + '</span>';
     }
 
     function countForDate(d) {
