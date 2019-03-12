@@ -1,3 +1,5 @@
+## This project is not actively maintained
+
 # D3 Calendar Heatmap
 A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by Github's contribution chart
 
