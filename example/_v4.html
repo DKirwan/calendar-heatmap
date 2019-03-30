@@ -24,7 +24,13 @@
     var heatmap = calendarHeatmap()
       .data(chartData)
       .selector('.container')
-      .tooltipEnabled(true)
+      .tooltipTextEnabled(true)
+       .tooltipText({
+           plural: 'You sold {count} items on {date}',
+           singular: 'You sold {count} item on {date}',
+           none: 'No item was sold on {date}'
+       })
+        .tooltipDateFormat('MM/DD/YYYY')
       .colorRange(['#f4f7f7', '#79a8a9'])
       .onClick(function (data) {
         console.log('data', data);
