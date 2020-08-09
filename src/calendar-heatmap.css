@@ -25,3 +25,12 @@ rect.day-cell:hover {
 .calendar-heatmap {
   box-sizing: initial;
 }
+.month-outline {
+  fill: none;
+  stroke: #444444;
+  stroke-width: 2px;
+}
+.today-cell {
+  stroke-width: 2px;
+  stroke: #05745F;
+}

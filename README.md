@@ -3,7 +3,7 @@
 # D3 Calendar Heatmap
 A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by Github's contribution chart
 
-![Reusable D3.js Calendar Heatmap chart](https://raw.githubusercontent.com/DKirwan/calendar-heatmap/develop/example/thumbnail.png)
+![Reusable D3.js Calendar Heatmap chart](https://raw.githubusercontent.com/thismatters/calendar-heatmap/month-outlines/example/thumbnail.png)
 
 ## Configuration
 
@@ -12,11 +12,14 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 | data | Chart data | none | yes |
 | selector | DOM selector to attach the chart to | body | no |
 | max | Maximum count | max found in data | no |
-| startDate | Date to start heatmap at | 1 year ago | no |
+| startDate | Date to start heatmap at | Start of month of earliest date in dataset | no |
+| endDate | Date to end heatmap at | End of month of latest date in dataset | no |
 | colorRange | Minimum and maximum chart gradient colors | ['#D8E6E7', '#218380'] | no |
 | tooltipEnabled | Option to render a tooltip | true | no |
 | tooltipUnit | Unit to render on the tooltip, can be object for pluralization control | 'contributions' | no |
 | legendEnabled | Option to render a legend | true | no |
+| monthOutlineEnabled | Option to ouline months | true | no |
+| today | Date to highlight | today | no |
 | onClick | callback function on day click events (see example below) | null | no |
 | locale | Object to translate every word used, except for tooltipUnit | see below | no |
 
