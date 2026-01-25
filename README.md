@@ -35,16 +35,24 @@ A [d3.js](https://d3js.org/) heatmap representing time series data. Inspired by 
 
 ## Dependencies
 
-* [d3.js](https://d3js.org/)
+* [d3.js](https://d3js.org/) (v7+)
 * [moment.js](http://momentjs.com/)
+
+## Installation
+
+```bash
+npm install @goujon/calendar-heatmap
+```
 
 ## Usage
 
 1: Add d3.js and moment.js
 
-2: Include calendar-heatmap.js and calendar-heatmap.css
-`<link rel="stylesheet" type="text/css" href="path/tocalendar-heatmap.css">`
-`<script src="path/to/calendar-heatmap.js"></script>`
+2: Import calendar-heatmap and its styles
+```javascript
+import calendarHeatmap from '@goujon/calendar-heatmap';
+import '@goujon/calendar-heatmap/src/calendar-heatmap.css';
+```
 
 3: Format the data so each array item has a `date` and `count` property.
 As long as `new Date()` can parse the date string it's ok. Note - there all data should be rolled up into daily bucket granularity.
@@ -85,3 +93,13 @@ chart1();  // render the chart
 ## Pull Requests and issues
 
 ...are very welcome!
+
+## Build (TypeScript)
+
+```bash
+npm run build
+```
+
+## Demo
+
+Open `example/index.html` after running `npm install` and `npm run build`. The demo uses import maps to load D3 and Moment from a CDN. 

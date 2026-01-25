@@ -1,0 +1,45 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>D3.js v7 Calendar Heatmap</title>
+  <link rel="stylesheet" type="text/css" href="../src/calendar-heatmap.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "d3": "https://esm.sh/d3@7",
+        "moment": "https://esm.sh/moment@2"
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container"></div>
+  <script type="module">
+    import * as d3 from 'd3';
+    import moment from 'moment';
+    import calendarHeatmap from '../dist/calendar-heatmap.js';
+
+    const now = moment().endOf('day').toDate();
+    const yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+    const chartData = d3.timeDays(yearAgo, now).map((dateElement) => ({
+      date: dateElement,
+      count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6)
+        ? Math.floor(Math.random() * 60)
+        : Math.floor(Math.random() * 10)
+    }));
+
+    const heatmap = calendarHeatmap()
+      .data(chartData)
+      .selector('.container')
+      .tooltipEnabled(true)
+      .colorRange(['#f4f7f7', '#79a8a9'])
+      .onClick(function (data) {
+        console.log('data', data);
+      });
+    heatmap();  // render the chart
+  </script>
+</body>
+
+</html>

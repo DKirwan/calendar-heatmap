@@ -1,0 +1,42 @@
+{
+  "name": "@goujon/calendar-heatmap",
+  "version": "1.0.0",
+  "description": "A d3.js heatmap representing time series data. Inspired by Github's contribution chart",
+  "homepage": "https://github.com/DKirwan/calendar-heatmap",
+  "author": "Darragh Kirwan <d@rragh.com>",
+  "contributors": [
+    "Oskar Niburski <oskarniburski@gmail.com>"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DKirwan/calendar-heatmap.git"
+  },
+  "keywords": [
+    "d3",
+    "moment",
+    "heatmap"
+  ],
+  "main": "dist/calendar-heatmap.js",
+  "module": "dist/calendar-heatmap.js",
+  "style": "src/calendar-heatmap.css",
+  "files": [
+    "dist/calendar-heatmap.js",
+    "src/calendar-heatmap.ts",
+    "src/calendar-heatmap.css"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "d3": "^7.9.0",
+    "moment": "2.11.x"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/moment": "^2.13.0",
+    "typescript": "^5.4.5"
+  }
+}

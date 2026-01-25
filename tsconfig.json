@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "ES2015",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "strict": false,
+    "noImplicitAny": false,
+    "declaration": false,
+    "sourceMap": true
+  },
+  "include": [
+    "src/calendar-heatmap.ts"
+  ]
+}
