@@ -1,42 +1,33 @@
 {
-  "name": "@goujon/calendar-heatmap",
-  "version": "1.0.0",
-  "description": "A d3.js heatmap representing time series data. Inspired by Github's contribution chart",
-  "homepage": "https://github.com/DKirwan/calendar-heatmap",
-  "author": "Darragh Kirwan <d@rragh.com>",
-  "contributors": [
-    "Oskar Niburski <oskarniburski@gmail.com>"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/DKirwan/calendar-heatmap.git"
-  },
-  "keywords": [
-    "d3",
-    "moment",
-    "heatmap"
-  ],
-  "main": "dist/calendar-heatmap.js",
-  "module": "dist/calendar-heatmap.js",
-  "style": "src/calendar-heatmap.css",
-  "files": [
-    "dist/calendar-heatmap.js",
-    "src/calendar-heatmap.ts",
-    "src/calendar-heatmap.css"
+  "name": "calendar-heatmap-workspace",
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf dist",
-    "prepare": "npm run build"
-  },
-  "dependencies": {
-    "d3": "^7.9.0",
-    "moment": "2.11.x"
+    "build": "npm run --workspaces --if-present build",
+    "clean": "rm -rf packages/*/dist",
+    "lint": "eslint \"packages/**/src/**/*.{ts,js,tsx}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish",
+    "demo": "vite --config example/vite.config.mts",
+    "demo:build": "vite build --config example/vite.config.mts",
+    "demo:preview": "vite preview --config example/vite.config.mts"
   },
   "devDependencies": {
-    "@types/d3": "^7.4.3",
-    "@types/moment": "^2.13.0",
-    "typescript": "^5.4.5"
+    "@eslint/js": "^9.0.0",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@changesets/cli": "^2.27.1",
+    "eslint": "^9.0.0",
+    "globals": "^14.0.0",
+    "jsdom": "^24.0.0",
+    "vitest": "^1.6.0",
+    "vite": "^5.2.11"
   }
 }

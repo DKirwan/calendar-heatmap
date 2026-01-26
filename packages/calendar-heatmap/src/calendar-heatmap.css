@@ -2,11 +2,16 @@ text.month-name,
 text.calendar-heatmap-legend-text,
 text.day-initial {
   font-size: 10px;
-  fill: inherit;
+  fill: #555555;
   font-family: Helvetica, arial, 'Open Sans', sans-serif;
 }
 rect.day-cell:hover {
   stroke: #555555;
+  stroke-width: 1px;
+}
+rect.day-cell:focus,
+rect.day-cell:focus-visible {
+  stroke: #1b232b;
   stroke-width: 1px;
 }
 .day-cell-tooltip {
@@ -24,4 +29,22 @@ rect.day-cell:hover {
 }
 .calendar-heatmap {
   box-sizing: initial;
+  overflow: visible;
+}
+
+.calendar-heatmap-accessibility {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+
+text.month-name {
+  dominant-baseline: hanging;
 }

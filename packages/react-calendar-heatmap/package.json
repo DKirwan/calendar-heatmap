@@ -1,0 +1,44 @@
+{
+  "name": "@goujon/react-calendar-heatmap",
+  "version": "1.0.0-beta.0",
+  "description": "React wrapper for @goujon/calendar-heatmap",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.mjs",
+    "dist/index.d.ts",
+    "dist/index.d.mts",
+    "dist/index.js.map",
+    "dist/index.mjs.map"
+  ],
+  "scripts": {
+    "build": "tsup src/index.tsx --format esm,cjs --dts --sourcemap --minify --clean --out-dir dist --external react --external react-dom --external react/jsx-runtime"
+  },
+  "dependencies": {
+    "@goujon/calendar-heatmap": "^1.0.0-beta.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.5"
+  }
+}
