@@ -1,6 +1,6 @@
 {
   "name": "@goujon/react-calendar-heatmap",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "React wrapper for @goujon/calendar-heatmap",
   "license": "MIT",
   "publishConfig": {
@@ -29,7 +29,7 @@
     "build": "tsup src/index.tsx --format esm,cjs --dts --sourcemap --minify --clean --out-dir dist --external react --external react-dom --external react/jsx-runtime"
   },
   "dependencies": {
-    "@goujon/calendar-heatmap": "^1.0.0-beta.0"
+    "@goujon/calendar-heatmap": "^1.0.0-beta.1"
   },
   "peerDependencies": {
     "react": "^18.0.0",
