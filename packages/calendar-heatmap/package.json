@@ -1,0 +1,60 @@
+{
+  "name": "@goujon/calendar-heatmap",
+  "version": "1.0.0-beta.1",
+  "description": "A d3.js heatmap representing time series data. Inspired by Github's contribution chart",
+  "homepage": "https://github.com/DKirwan/calendar-heatmap",
+  "author": "Darragh Kirwan <d@rragh.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DKirwan/calendar-heatmap.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "d3",
+    "heatmap"
+  ],
+  "main": "dist/calendar-heatmap.js",
+  "module": "dist/calendar-heatmap.mjs",
+  "types": "dist/calendar-heatmap.d.ts",
+  "style": "src/calendar-heatmap.css",
+  "sideEffects": [
+    "src/calendar-heatmap.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/calendar-heatmap.d.ts",
+      "import": "./dist/calendar-heatmap.mjs",
+      "require": "./dist/calendar-heatmap.js"
+    },
+    "./calendar-heatmap.css": "./src/calendar-heatmap.css",
+    "./src/calendar-heatmap.css": "./src/calendar-heatmap.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/calendar-heatmap.js",
+    "dist/calendar-heatmap.mjs",
+    "dist/calendar-heatmap.d.ts",
+    "dist/calendar-heatmap.d.mts",
+    "dist/calendar-heatmap.js.map",
+    "dist/calendar-heatmap.mjs.map",
+    "src/calendar-heatmap.ts",
+    "src/calendar-heatmap.css"
+  ],
+  "scripts": {
+    "build": "tsup src/calendar-heatmap.ts --format esm,cjs --dts --sourcemap --minify --clean --out-dir dist",
+    "clean": "rm -rf dist",
+    "lint": "eslint \"src/**/*.{ts,js}\"",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "d3": "^7.9.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.5"
+  }
+}

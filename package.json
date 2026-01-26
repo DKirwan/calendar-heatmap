@@ -1,0 +1,33 @@
+{
+  "name": "calendar-heatmap-workspace",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run --workspaces --if-present build",
+    "clean": "rm -rf packages/*/dist",
+    "lint": "eslint \"packages/**/src/**/*.{ts,js,tsx}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish",
+    "demo": "vite --config example/vite.config.mts",
+    "demo:build": "vite build --config example/vite.config.mts",
+    "demo:preview": "vite preview --config example/vite.config.mts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@changesets/cli": "^2.27.1",
+    "eslint": "^9.0.0",
+    "globals": "^14.0.0",
+    "jsdom": "^24.0.0",
+    "vitest": "^1.6.0",
+    "vite": "^5.2.11"
+  }
+}

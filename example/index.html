@@ -1,16 +1,75 @@
-<html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar Heatmap Showcase</title>
+  </head>
+  <body>
+    <main class="page">
+      <header>
+        <h1>Calendar Heatmap</h1>
+        <p class="lede">
+          A modern, accessible calendar heatmap with flexible formatting hooks. Explore different
+          visual styles and interaction patterns below.
+        </p>
+      </header>
 
-<head>
-  <meta charset="utf-8">
-  <title>D3.js Calendar Heatmap</title>
-  <link rel="stylesheet" type="text/css" href="../src/calendar-heatmap.css">
-</head>
+      <section class="hero">
+        <div class="hero-grid">
+          <div class="stat">
+            <h3>Total Activity</h3>
+            <p data-stat="total">—</p>
+          </div>
+          <div class="stat">
+            <h3>Best Day</h3>
+            <p data-stat="best">—</p>
+          </div>
+          <div class="stat">
+            <h3>Active Days</h3>
+            <p data-stat="days">—</p>
+          </div>
+          <div class="stat">
+            <h3>Daily Average</h3>
+            <p data-stat="avg">—</p>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="toggle active" data-set="steady">Steady</button>
+          <button class="toggle" data-set="growing">Growing</button>
+          <button class="toggle" data-set="sprint">Sprint</button>
+        </div>
+      </section>
 
-<body>
-  <h1>v3</h1>
-  <iframe src="_v3.html" frameborder="0" width="1000" height="200"></iframe>
-  <h1>v4</h1>
-  <iframe src="_v4.html" frameborder="0" width="1000" height="200"></iframe>
-</body>
+      <section class="grid">
+        <article class="card">
+          <h2>Default Style</h2>
+          <p>Balanced palette, Sunday week start, default legend and tooltip.</p>
+          <div class="chart-shell" id="heatmap-default"></div>
+          <div class="pill">Click a day to log it below</div>
+          <div class="event-log" id="log-default">No day selected yet.</div>
+        </article>
 
+        <article class="card">
+          <h2>Focus Mode</h2>
+          <p>Monday week start, custom tooltip formatting, localized labels.</p>
+          <div class="chart-shell" id="heatmap-focus"></div>
+          <div class="pill">Week starts Monday</div>
+          <div class="event-log" id="log-focus">No day selected yet.</div>
+        </article>
+      </section>
+
+      <section class="card full-width">
+        <h2>High Contrast Overview</h2>
+        <p>Wider layout for dashboards. Ideal for large screens and summary analytics.</p>
+        <div class="chart-shell" id="heatmap-story"></div>
+      </section>
+
+      <footer>
+        Tip: run <code>npm run demo</code> to launch this page locally.
+      </footer>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

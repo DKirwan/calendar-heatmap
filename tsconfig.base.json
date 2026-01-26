@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "ES2015",
+    "moduleResolution": "node",
+    "strict": false,
+    "noImplicitAny": false,
+    "declaration": false,
+    "sourceMap": true
+  }
+}
