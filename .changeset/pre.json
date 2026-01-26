@@ -1,0 +1,9 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@goujon/calendar-heatmap": "1.0.0-beta.0",
+    "@goujon/react-calendar-heatmap": "1.0.0-beta.0"
+  },
+  "changesets": []
+}
