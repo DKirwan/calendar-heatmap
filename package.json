@@ -24,7 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.0.0",
     "@changesets/cli": "^2.27.1",
-    "eslint": "^9.0.0",
+    "eslint": "^10.0.0",
     "globals": "^17.3.0",
     "jsdom": "^28.0.0",
     "vitest": "^4.0.18",
